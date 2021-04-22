@@ -9,7 +9,7 @@ class User {
     id:string
 
     @Column()
-    name:string
+    email:string
 
     @CreateDateColumn()
     created_at:Date
