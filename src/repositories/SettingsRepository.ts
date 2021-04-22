@@ -1,6 +1,7 @@
 
 import { EntityRepository, Repository } from "typeorm";
-import { Setting } from "../models/Setting";
+import { Setting } from "../entities/Setting";
+
 
  
  @EntityRepository(Setting)
