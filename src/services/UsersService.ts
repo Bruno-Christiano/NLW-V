@@ -1,14 +1,18 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Repository } from "typeorm";
+import { User } from "../entities/User";
 import { UserRepository } from "../repositories/UsersRepository"
 
 
 class UsersService {
+    private userRepository: Repository<User>
+
+    constructor(){
+        this.userRepository = getCustomRepository(UserRepository);
+    }
 
     async create(email: string) {
 
-        const userRepository = getCustomRepository(UserRepository);
-
-        const userAlreadyExists = await userRepository.findOne({
+        const userAlreadyExists = await this.userRepository.findOne({
             email
         })// verificar esse esse registro ja existe
 
@@ -16,13 +20,13 @@ class UsersService {
             throw new Error(`Usuário ${userAlreadyExists.email} jé existe no banco de dados`);
         }
 
-        const users = userRepository.create({
+        const users =this.userRepository.create({
             email
 
         });
 
 
-        await userRepository.save(users);
+        await this.userRepository.save(users);
 
         return users;//retonar o usuario criado
 
